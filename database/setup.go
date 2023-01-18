@@ -15,7 +15,7 @@ func SetupDatabase() *gorm.DB {
 		log.Fatal("Error loading .env file")
 	}
 
-	dsn := "root:@tcp(" + os.Getenv("HOST") + ":" + os.Getenv("DB_PORT") + ")/" + os.Getenv("DATABASE") + "?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:" + os.Getenv("DB_PASSWORD") + "@tcp(" + os.Getenv("HOST") + ":" + os.Getenv("DB_PORT") + ")/" + os.Getenv("DATABASE") + "?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
