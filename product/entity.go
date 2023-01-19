@@ -9,6 +9,7 @@ type Product struct {
 	Title       string `gorm:size:100`
 	UnitPrice   int    `gorm:size:100`
 	Description string `gorm:size:100`
+	Code        string `gorm:size:100`
 	Image       string `gorm:size:100`
 	IsDeleted   int8   `gorm:size:1;default:0`
 	CreatedAt   time.Time

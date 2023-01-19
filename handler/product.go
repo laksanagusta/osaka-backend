@@ -31,7 +31,8 @@ func (h *productHandler) Save(c *gin.Context) {
 
 	products, err := h.service.Save(input)
 	if err != nil {
-		response := helper.APIResponse("Failed to save product", http.StatusBadRequest, "error", nil)
+		errorMessage := gin.H{"errors": err.Error()}
+		response := helper.APIResponse("Failed to save product", http.StatusBadRequest, "error", errorMessage)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -111,6 +112,29 @@ func (h *productHandler) FindById(c *gin.Context) {
 	}
 
 	productSingle, err := h.service.FindById(input.ID)
+	if err != nil {
+		response := helper.APIResponse("Failed to get product", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Success get product !", http.StatusOK, "success", product.FormatProductV1(productSingle))
+	c.JSON(http.StatusOK, response)
+}
+
+func (h *productHandler) FindByCode(c *gin.Context) {
+	var input product.FindByCode
+	err := c.ShouldBindUri(&input)
+
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"error": errors}
+		response := helper.APIResponse("Failed to create product", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	productSingle, err := h.service.FindByCode(input.Code)
 	if err != nil {
 		response := helper.APIResponse("Failed to get product", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)

@@ -11,6 +11,7 @@ type Service interface {
 	SaveImage(productId int, fileLocation string) (Product, error)
 	FindAll(page int, page_size int, s string) ([]Product, error)
 	Delete(productId int) (Product, error)
+	FindByCode(code string) (Product, error)
 }
 
 type service struct {
@@ -26,6 +27,16 @@ func (s *service) Save(input ProductCreateInput) (Product, error) {
 	product.Title = input.Title
 	product.UnitPrice = input.UnitPrice
 	product.Description = input.Description
+	product.Code = input.Code
+
+	checkProduct, err := s.repository.FindByCode(input.Code)
+	if err != nil {
+		return product, err
+	}
+
+	if checkProduct.ID != 0 {
+		return product, errors.New("create product failed, product already exist")
+	}
 
 	newProduct, err := s.repository.Save(product)
 	if err != nil {
@@ -56,6 +67,19 @@ func (s *service) UpdateProduct(inputID FindById, inputData ProductCreateInput) 
 
 func (s *service) FindById(productId int) (Product, error) {
 	product, err := s.repository.FindById(productId)
+	if err != nil {
+		return product, err
+	}
+
+	if product.ID == 0 {
+		return product, errors.New("Product not found")
+	}
+
+	return product, nil
+}
+
+func (s *service) FindByCode(code string) (Product, error) {
+	product, err := s.repository.FindByCode(code)
 	if err != nil {
 		return product, err
 	}

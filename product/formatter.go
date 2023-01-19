@@ -9,7 +9,8 @@ type ProductFormatter struct {
 	Title       string    `json:"title"`
 	UnitPrice   int       `json:"unitPrice"`
 	Description string    `json:"description"`
-	Image       string    `json:image`
+	Image       string    `json:"image"`
+	Code        string    `json:"code"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 }
@@ -21,6 +22,7 @@ func FormatProductV1(product Product) ProductFormatter {
 	productFormatter.UnitPrice = product.UnitPrice
 	productFormatter.Description = product.Description
 	productFormatter.Image = product.Image
+	productFormatter.Code = product.Code
 
 	return productFormatter
 }

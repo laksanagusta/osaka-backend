@@ -1,6 +1,8 @@
 package product
 
 import (
+	"fmt"
+
 	"gorm.io/gorm"
 )
 
@@ -8,6 +10,7 @@ type Repository interface {
 	Save(product Product) (Product, error)
 	Update(product Product) (Product, error)
 	FindById(productId int) (Product, error)
+	FindByCode(code string) (Product, error)
 	FindAll(page int, page_size int, q string) ([]Product, error)
 	Delete(productId int) (Product, error)
 }
@@ -43,6 +46,18 @@ func (r *repository) Update(product Product) (Product, error) {
 func (r *repository) FindById(productId int) (Product, error) {
 	product := Product{}
 	err := r.db.First(&product, productId).Error
+
+	if err != nil {
+		return product, err
+	}
+
+	return product, nil
+}
+
+func (r *repository) FindByCode(code string) (Product, error) {
+	product := Product{}
+	fmt.Println(code)
+	err := r.db.Where("code = ?", code).Find(&product).Error
 
 	if err != nil {
 		return product, err
