@@ -30,6 +30,7 @@ func (s *service) Save(input ProductCreateInput) (Product, error) {
 	product.Code = input.Code
 
 	checkProduct, err := s.repository.FindByCode(input.Code)
+
 	if err != nil {
 		return product, err
 	}
