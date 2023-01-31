@@ -29,6 +29,7 @@ func (s *service) Save(input OrderCreateInput) (Order, error) {
 	order.Status = input.Status
 	order.GrandTotal = input.GrandTotal
 	order.CustomerName = input.CustomerName
+	order.OrderNumber = input.OrderNumber
 
 	newOrder, err := s.repository.Save(order)
 	if err != nil {

@@ -68,6 +68,8 @@ func FormatOrderProduct(orderProduct OrderProduct) OrderProductFormatter {
 	orderProductFormatter.Qty = orderProduct.Qty
 	orderProductFormatter.SubTotal = orderProduct.SubTotal
 	orderProductFormatter.UnitPrice = orderProduct.UnitPrice
+	orderProductFormatter.ProductID = orderProduct.ProductID
+	orderProductFormatter.OrderID = orderProduct.OrderID
 
 	orderFormatter := OrderFormatter{}
 	orderFormatter.ID = orderProduct.Order.ID
@@ -83,6 +85,7 @@ func FormatOrderProduct(orderProduct OrderProduct) OrderProductFormatter {
 	productFormatter.Description = orderProduct.Product.Description
 	productFormatter.UnitPrice = orderProduct.Product.UnitPrice
 	productFormatter.Image = orderProduct.Product.Image
+	productFormatter.Code = orderProduct.Product.Code
 
 	orderProductFormatter.Product = productFormatter
 
@@ -118,6 +121,7 @@ func FormatOrderBasketV1(order Order, orderProduct []OrderProduct) OrderFormatte
 	orderFormatter.Status = order.Status
 	orderFormatter.GrandTotal = order.GrandTotal
 	orderFormatter.CustomerName = order.CustomerName
+	orderFormatter.OrderNumber = order.OrderNumber
 
 	for _, orderProduct := range orderProduct {
 		orderProductFormatter := FormatOrderProductBasketV1(orderProduct)

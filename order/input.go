@@ -4,6 +4,7 @@ type OrderCreateInput struct {
 	Status       string `json:"status" validate:"required"`
 	GrandTotal   int    `json:"grandTotal"`
 	CustomerName string `json:"customerName" validate:"required"`
+	OrderNumber  string `json:"orderNumber" validate:"required"`
 	UserID       int    `json:"userId" validate:"required"`
 }
 
