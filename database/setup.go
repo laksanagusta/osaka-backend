@@ -2,13 +2,14 @@ package database
 
 import (
 	"log"
+	"os"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 func SetupDatabase() *gorm.DB {
-	dsn := "root:@tcp(127.0.0.1:3306)/osaka?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:" + os.Getenv("DB_PASSWORD") + "@tcp(" + os.Getenv("HOST") + ":" + os.Getenv("DB_PORT") + ")/" + os.Getenv("DATABASE") + "?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
