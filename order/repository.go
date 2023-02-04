@@ -82,12 +82,12 @@ func (r *repository) FindAll(page int, pageSize int, q string) ([]Order, error) 
 	var order []Order
 
 	if q != "" {
-		err := r.db.Where("order_number LIKE ?", "%"+q+"%").Order("created_at DESC").Offset(page).Limit(pageSize).Find(&order).Error
+		err := r.db.Where("order_number LIKE ?", "%"+q+"%").Offset(page).Limit(pageSize).Order("created_at DESC").Find(&order).Error
 		if err != nil {
 			return order, err
 		}
 	} else {
-		err := r.db.Offset(page).Limit(pageSize).Find(&order).Error
+		err := r.db.Offset(page).Limit(pageSize).Order("created_at DESC").Find(&order).Error
 		if err != nil {
 			return order, err
 		}
