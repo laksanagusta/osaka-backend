@@ -46,6 +46,8 @@ func FormatOrderV1(order Order) OrderFormatter {
 	orderFormatter.GrandTotal = order.GrandTotal
 	orderFormatter.OrderNumber = order.OrderNumber
 	orderFormatter.CustomerName = order.CustomerName
+	orderFormatter.CreatedAt = order.CreatedAt
+	orderFormatter.UpdatedAt = order.UpdatedAt
 
 	return orderFormatter
 }
