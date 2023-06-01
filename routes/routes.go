@@ -18,7 +18,7 @@ import (
 )
 
 func SetupRoutes(db *gorm.DB) gin.Engine {
-	//Version 1.0
+	//Version 1.1
 
 	//Repository
 	userRepository := user.NewRepository(db)
